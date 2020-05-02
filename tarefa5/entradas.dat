@@ -1,0 +1,20 @@
+int program() {
+    var int dia, idade;
+    var real saldo;
+
+    idade = 31;
+    dia = 0;
+    saldo = 31415.21;
+
+    dia = dia + 1;
+    saldo = saldo - 1000;
+
+    dia = dia + 1;
+    saldo = saldo / 2;
+
+    dia = dia + 1;
+    saldo = saldo + 15000.0;
+
+    dia = dia + 21;
+    saldo = saldo * 42;
+}
