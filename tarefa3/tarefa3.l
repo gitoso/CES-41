@@ -8,7 +8,7 @@ ws          {delim}+
 aceita      [01]*([01]*2[01]*2[01]*2[01]*2[01]*2)*[01]*
 alfabeto    [012]*
 separador   \-+
-string	    [^ \t\n\r]+
+string      [^ \t\n\r]+
 
 %%
 {ws}        {;}

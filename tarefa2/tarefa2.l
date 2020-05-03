@@ -9,7 +9,7 @@ par0        1*(1*01*0)*1*
 par1        0*(0*10*1)*0*
 alfabeto    [01]*
 separador   \-+
-string	    [^ \t\n\r]+
+string      [^ \t\n\r]+
 
 %%
 {ws}        {;}
