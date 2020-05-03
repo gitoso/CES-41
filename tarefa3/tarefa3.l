@@ -5,7 +5,7 @@
 %}
 delim       [ \t\n\r]
 ws          {delim}+
-aceita      [01]*(2[01]*2[01]*2[01]*2[01]*2)*[01]*
+aceita      [01]*([01]*2[01]*2[01]*2[01]*2[01]*2)*[01]*
 alfabeto    [012]*
 separador   \-+
 string	    [^ \t\n\r]+
