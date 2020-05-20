@@ -1,2 +1,8 @@
+# gcc
 *.out
+
+# lex
 lex.*
+
+# open documents
+.~lock*
