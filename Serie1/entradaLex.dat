@@ -1,0 +1,15 @@
+programName {
+    toso = 25;
+    turma = 21;
+    anoInicio = 1965;
+    respostaUniverso = 42;
+
+    var1 = ( anoInicio + respostaUniverso ) + (256 + toso);
+    var2 = var1 + (turma) + (anoInicio + (var1 + toso));
+
+    ? codigo valido lexicamente   !
+    & mas invalido sintaticamente %
+    # 1323123 3123123 3123123 31  $
+    1994 + 25 = invalidoToso
+    ...
+}

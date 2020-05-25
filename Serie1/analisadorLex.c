@@ -87,7 +87,7 @@ atomo FormaNumero() {
 void FormaCadeia() {
 	size_t len = strlen(cadeia);
 	cadeia[len] = carac;
-	cadeia[len+1] = '\0';
+	cadeia[len + 1] = '\0';
 }
 
 char NovoCarac () {
@@ -144,6 +144,7 @@ void NovoAtomo () {
 						}
 						else {
 							atom.tipo = INVAL;
+							atom.atrib.carac = carac;
 							carac = NovoCarac();
 							estado = 3;
 						}
@@ -177,53 +178,50 @@ void NovoAtomo () {
 }
 
 void ImprimeLinha() {
-	fprintf(result, "+---+---------+--------------------------------+\n");
+	fprintf(result, "+-----+---------+--------------------------------+\n");
 }
 
 void ImprimeHeader() {
 	fprintf(result, "Arquivo de entrada: %s\n", nomearq);
 	ImprimeLinha();
-	fprintf(result, "| # | %-7s | %-30s |\n", "ATOMO", "VALOR");
+	fprintf(result, "| #ID | %-7s | %-30s |\n", "ATOMO", "VALOR");
 	ImprimeLinha();
 }
 
 void ImprimeAtomo() {
 	switch(atom.tipo) {
 		case ID:
-			fprintf(result, "| %d | %-7s | %-30s |\n", atom.tipo, "ID", atom.atrib.cadeia);
+			fprintf(result, "| %-3d | %-7s | %-30s |\n", atom.tipo, "ID", atom.atrib.cadeia);
 			break;
 		case CTE:
-			fprintf(result, "| %d | %-7s | %-30d |\n", atom.tipo, "CTE", atom.atrib.valor);
+			fprintf(result, "| %-3d | %-7s | %-30d |\n", atom.tipo, "CTE", atom.atrib.valor);
 			break;
 		case OPAD:
-			fprintf(result, "| %d | %-7s | %-30c |\n", atom.tipo, "OPAD", atom.atrib.carac);
+			fprintf(result, "| %-3d | %-7s | %-30c |\n", atom.tipo, "OPAD", atom.atrib.carac);
 			break;
 		case ATRIB:
-			fprintf(result, "| %d | %-7s | %-30c |\n", atom.tipo, "ATRIB", atom.atrib.carac);
+			fprintf(result, "| %-3d | %-7s | %-30c |\n", atom.tipo, "ATRIB", atom.atrib.carac);
 			break;
 		case ACHAV:
-			fprintf(result, "| %d | %-7s | %-30c |\n", atom.tipo, "ACHAV", atom.atrib.carac);
+			fprintf(result, "| %-3d | %-7s | %-30c |\n", atom.tipo, "ACHAV", atom.atrib.carac);
 			break;
 		case FCHAV:
-			fprintf(result, "| %d | %-7s | %-30c |\n", atom.tipo, "FCHAV", atom.atrib.carac);
+			fprintf(result, "| %-3d | %-7s | %-30c |\n", atom.tipo, "FCHAV", atom.atrib.carac);
 			break;
 		case APAR:
-			fprintf(result, "| %d | %-7s | %-30c |\n", atom.tipo, "APAR", atom.atrib.carac);
+			fprintf(result, "| %-3d | %-7s | %-30c |\n", atom.tipo, "APAR", atom.atrib.carac);
 			break;
 		case FPAR:
-			fprintf(result, "| %d | %-7s | %-30c |\n", atom.tipo, "FPAR", atom.atrib.carac);
+			fprintf(result, "| %-3d | %-7s | %-30c |\n", atom.tipo, "FPAR", atom.atrib.carac);
 			break;
 		case PVIRG:
-			fprintf(result, "| %d | %-7s | %-30c |\n", atom.tipo, "PVIRG", atom.atrib.carac);
+			fprintf(result, "| %-3d | %-7s | %-30c |\n", atom.tipo, "PVIRG", atom.atrib.carac);
 			break;
 		case FINAL:
-			fprintf(result, "| %d | %-7s | %-30c |\n", atom.tipo, "FINAL", ' ');
+			fprintf(result, "| %-3d | %-7s | %-30c |\n", atom.tipo, "FINAL", ' ');
 			break;
 		case INVAL:
-			fprintf(result, "| %d | %-7s | %-30c |\n", atom.tipo, "INVAL", ' ');
-			break;
-		default:
-			fprintf(result, "Error!");
+			fprintf(result, "| %-3d | %-7s | %-30c |\n", atom.tipo, "INVAL", atom.atrib.carac);
 			break;
 	}
 	ImprimeLinha();

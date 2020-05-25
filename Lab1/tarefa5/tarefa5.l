@@ -1,26 +1,10 @@
 %{
 #include <string.h>
-#define ID          1
-#define CTINT       2
-#define CTREAL      3
-#define OPAD        4
-#define MAIS        5
-#define MENOS       6
-#define OPMULT      7
-#define VEZES       8
-#define DIV         9
-#define ABPAR       10
-#define FPAR        11
-#define ABCHAV      12
-#define FCHAV       13
-#define ATRIB       14
-#define VIRG        15
-#define PVIRG       16
-#define PROGRAM     17
-#define VAR         18
-#define INT         19
-#define REAL        20
-#define INVAL       21
+
+enum {
+    ID, CTINT, CTREAL, OPAD, MAIS, MENOS, OPMULT, VEZES, DIV, ABPAR, FPAR, ABCHAV, FCHAV, ATRIB, VIRG, PVIRG, PROGRAM, VAR, INT, REAL, INVAL
+};
+
 union {
     char string[50];
     int atr, valor;
