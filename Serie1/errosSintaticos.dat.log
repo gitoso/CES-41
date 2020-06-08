@@ -1,0 +1,7 @@
+[Error: Expected ID] Átomo: 123 : O programa deve inicializar com um átomo do tipo ID
+[Error: Expected ID] Átomo: 456 : O programa deve inicializar com um átomo do tipo ID
+[Error: Expected ACHAV] Átomo: 789 : Imediatamente após o nome do programa deve existir uma abertura de chaves
+[Error: Expected APAR or CTE or ID] Átomo: $ : Termo inválido, deve ser uma expressão entre parênteses ou um número
+[Error: Expected ATRIB] Átomo: # : Faltando átomo de atribuição (=)
+[Error: Expected PVIRG] Átomo: @ : Um comando deve encerrar com ponto-vírgula (;)
+[Error: Expected FCHAV] Átomo: 0 : Após os comandos o programa deve ser encerrado imediatamente com um fechamento de chaves

@@ -39,7 +39,7 @@ logic erro;
 FILE *program, *result;
 char carac;
 char *cadeia;
-char nomearq[512];	
+char nomearq[512], nomearqSaida[516];	
 atomo atom;
 
 // Funções do analisador léxico (headers)
@@ -195,11 +195,14 @@ void NovoAtomo () {
 }
 
 char* StrAtomo() {
-    char *aux = (char *)malloc(2 * sizeof(char));
+    char *aux = (char *)malloc(MAXCADEIA * sizeof(char));
     switch (atom.tipo) {
         case ID:
+            strcpy(aux, atom.atrib.cadeia);
+            return aux;
         case CTE:
-            return atom.atrib.cadeia;
+            sprintf(aux, "%d", atom.atrib.valor);
+            return aux;
         case OPAD:
         case ATRIB:
         case ACHAV:
@@ -207,6 +210,7 @@ char* StrAtomo() {
         case APAR:
         case FPAR:
         case PVIRG:
+        case INVAL:
             aux[0] = atom.atrib.carac;
             aux[1] = '\0';
             return aux;
@@ -228,28 +232,28 @@ void ExecProg();
 
 // Funções do analisador sintatico (definições)
 void Esperado(char *expected, char *message) {
+    erro = TRUE;
     char *strAtomo = StrAtomo();
     fprintf(result, "[Error: Expected %s] Átomo: %s : %s\n", expected, strAtomo, message);
-    free(strAtomo);
 }
 
 void ExecEaux() {
-    int estado = 32;
-    while (estado != 34) {
+    int estado = 33;
+    while (estado != 35) {
         switch (estado) {
-            case 32:
+            case 33:
                 if (atom.tipo == OPAD) {
                     NovoAtomo();
-                    estado = 33;
+                    estado = 34;
                 }
                 else {
                     // Nao faz nada
-                    estado = 34;
+                    estado = 35;
                 }
                 break;
-            case 33:
+            case 34:
                 ExecExpressao();
-                estado = 34;
+                estado = 35;
                 break;
         }
     }
@@ -269,7 +273,6 @@ void ExecTermo() {
                     estado = 32;
                 }
                 else {
-                    Esperado("APAR or CTE or ID", "Termo inválido, deve ser uma expressão entre parêntes ou um número");
                     estado = 30;
                 }
                 break;
@@ -283,7 +286,6 @@ void ExecTermo() {
                     estado = 32;
                 }
                 else {
-                    Esperado("FPAR", "Imediatamente ao término de uma expressão deve haver um fechamento de parênteses");
                     estado = 31;
                 }
                 break;
@@ -298,17 +300,22 @@ void ExecTermo() {
                     estado = 32;
                 }
                 else {
+                    Esperado("APAR or CTE or ID", "Termo inválido, deve ser uma expressão entre parênteses ou um número");
                     NovoAtomo();
                     estado = 30;
                 }
                 break;
             case 31:
                 // Tratamento de erro
-                if (atom.tipo == FCHAV) {
+                if (atom.tipo == FPAR || atom.tipo == CTE || atom.tipo == ID) {
                     NovoAtomo();
                     estado = 32;
                 }
-                else if (atom.tipo == CTE || atom.tipo == ID) {
+                else if (atom.tipo == FINAL) {
+                    estado = 32;
+                }
+                else {
+                    Esperado("FPAR", "Imediatamente ao término de uma expressão deve haver um fechamento de parênteses");
                     NovoAtomo();
                     estado = 31;
                 }
@@ -359,7 +366,6 @@ void ExecComando() {
                     estado = 15;
                 }
                 else {
-                    Esperado("ID", "Um comando deve inicializar com um nome de variável (ID) válido");
                     estado = 18;
                 }
                 break;
@@ -369,7 +375,6 @@ void ExecComando() {
                     estado = 16;
                 }
                 else {
-                    Esperado("ATRIB", "");
                     estado = 19;
                 }
                 break;
@@ -383,7 +388,6 @@ void ExecComando() {
                     estado = 21;
                 }
                 else {
-                    Esperado("PVIRG", "Um comando deve encerrar com ponto-vírgula (;)");
                     estado = 20;
                 }
                 break;
@@ -405,6 +409,7 @@ void ExecComando() {
                     estado = 21;
                 }
                 else {
+                    Esperado("ID", "Um comando deve inicializar com um nome de variável (ID) válido");
                     NovoAtomo();
                     estado = 18;
                 }
@@ -423,9 +428,26 @@ void ExecComando() {
                     estado = 21;
                 }
                 else {
+                    Esperado("ATRIB", "Faltando átomo de atribuição (=)");
                     NovoAtomo();
                     estado = 19;
                 }
+                break;
+            case 20:
+                // Tratamento de Erros
+                if (atom.tipo == PVIRG) {
+                    NovoAtomo();
+                    estado = 21;
+                }
+                else if (atom.tipo == FINAL) {
+                    estado = 21;
+                }
+                else {
+                    Esperado("PVIRG", "Um comando deve encerrar com ponto-vírgula (;)");
+                    NovoAtomo();
+                    estado = 20;
+                }
+                break;
         }
     }
 }
@@ -456,8 +478,7 @@ void ExecCmdComp() {
                     estado = 6;
                 }
                 else {
-                    Esperado("ACHAV", "Imediatamente após o nome do programa deve existir uma abertura de chaves");
-                    estado = 9;
+                    estado = 8;
                 }
                 break;
             case 6:
@@ -470,7 +491,6 @@ void ExecCmdComp() {
                     estado = 10;
                 }
                 else {
-                    Esperado("FCHAV", "Após os comandos o programa deve ser encerrado imediatamente com um fechamento de chaves");
                     estado = 9;
                 }
                 break;
@@ -480,11 +500,17 @@ void ExecCmdComp() {
                     NovoAtomo();
                     estado = 6;
                 }
+                else if (atom.tipo == FCHAV) {
+                    NovoAtomo();
+                    estado = 10;
+                }
                 else if (atom.tipo == FINAL) {
                     // Nao faz nada
+                    Esperado("ACHAV", "Término inesperado");
                     estado = 10;
                 }
                 else {
+                    Esperado("ACHAV", "Imediatamente após o nome do programa deve existir uma abertura de chaves");
                     NovoAtomo();
                     estado = 8;
                 }
@@ -497,9 +523,11 @@ void ExecCmdComp() {
                 }
                 else if (atom.tipo == FINAL) {
                     // Nao faz nada
+                    Esperado("FCHAV", "Término inesperado");
                     estado = 10;
                 }
                 else {
+                    Esperado("FCHAV", "Após os comandos o programa deve ser encerrado imediatamente com um fechamento de chaves");
                     NovoAtomo();
                     estado = 9;
                 }
@@ -518,7 +546,6 @@ void ExecProg () {
                     estado = 2;
                 }
 				else {
-                    Esperado ("ID", "O programa deve inicializar com um átomo do tipo ID"); 
                     estado = 3;
                 }
 				break;
@@ -534,9 +561,11 @@ void ExecProg () {
                 }
                 else if (atom.tipo == FINAL) {
                     // Nao faz nada
+                    Esperado("ID", "Término inesperado");
                     estado = 4;
                 }
                 else {
+                    Esperado ("ID", "O programa deve inicializar com um átomo do tipo ID");
                     NovoAtomo();
                     estado = 3;
                 }
@@ -553,7 +582,9 @@ int main(int argc, char* argv[]) {
 	fgets (nomearq, 511, stdin);
 	strtok(nomearq, "\n");
 	program = fopen (nomearq, "r");
-	result = fopen ("analise-sintatica.log", "w");
+    strcpy(nomearqSaida, nomearq);
+    strcat(nomearqSaida, ".log");
+	result = fopen (nomearqSaida, "w");
 	erro = FALSE;
 	carac = NovoCarac ();
 	NovoAtomo ();
@@ -561,7 +592,7 @@ int main(int argc, char* argv[]) {
 	printf ("\nAnalise do arquivo '%s' encerrada!\n", nomearq);
 	if (erro) {
 		printf ("\nPrograma com erros!!!\n");
-	    printf ("Ver analise no arquivo 'analise-sintatica.log'\n");
+	    printf ("Ver analise no arquivo '%s'\n", nomearqSaida);
     }
     else {
         printf ("\nPrograma livre de erro sintático!\n");

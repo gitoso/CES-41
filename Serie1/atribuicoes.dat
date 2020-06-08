@@ -1,0 +1,8 @@
+programName {
+    toso 25;
+    turma = 21
+    anoInicio = 1965;
+    respostaUniverso = 42;
+
+    var1 = (anoInicio + respostaUniverso + toso;
+}

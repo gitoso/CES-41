@@ -1,0 +1,7 @@
+[Error: Expected ATRIB] Átomo: 25 : Faltando átomo de atribuição (=)
+[Error: Expected PVIRG] Átomo: anoInicio : Um comando deve encerrar com ponto-vírgula (;)
+[Error: Expected PVIRG] Átomo: = : Um comando deve encerrar com ponto-vírgula (;)
+[Error: Expected PVIRG] Átomo: 1965 : Um comando deve encerrar com ponto-vírgula (;)
+[Error: Expected FPAR] Átomo: ; : Imediatamente ao término de uma expressão deve haver um fechamento de parênteses
+[Error: Expected FPAR] Átomo: } : Imediatamente ao término de uma expressão deve haver um fechamento de parênteses
+[Error: Expected FCHAV] Átomo: <<atomo inválido>> : Término inesperado
