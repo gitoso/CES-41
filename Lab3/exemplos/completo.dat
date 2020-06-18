@@ -1,0 +1,137 @@
+programa AnaliseDeTexto {{{
+
+   var {
+      carac(nomes[50, 10], palavra[10])
+      int (ntab, nocorr[50])
+      carac(c)
+      logic(fim)
+   }
+
+   funcao int Procura ()
+
+      var {
+         int (i, inf, sup, med, posic, compara)
+         logic(achou, fimteste)
+      }
+
+      comandos {
+         achou = falso;
+         inf = 1;
+         sup = ntab;
+         enquanto (!achou && sup >= inf) {
+            med = inf + sup / 2;
+            compara = 0;
+            fimteste = falso;
+            para i (0; !fimteste && compara == 0; i + 1) {
+               se (palavra[i] < nomes[med, i]) 
+                  compara = ~1;
+               senao 
+                  se (palavra[i] > nomes[med, i]) 
+                     compara = 1;
+               se (palavra[i] == '\0' || nomes[med, i] == '\0') 
+                  fimteste = verdade;
+            }
+            se (compara == 0) 
+               achou = verdade;
+            senao 
+               se (compara < 0) 
+                  sup = med - 1;
+               senao 
+                  inf = med + 1;
+         }
+         se (achou) 
+            posic = med;
+         senao 
+            posic = ~inf;
+         retornar posic;
+      }
+
+   procedimento Inserir (int posic)
+
+      var {
+         int (i, j)
+         logic(fim)
+      }
+
+      comandos {
+         ntab = ntab + 1;
+         para i (ntab; i >= posic + 1; i - 1) {
+            fim = falso;
+            para j (0; !fim; j + 1) {
+               nomes[i, j] = nomes[i - 1, j];
+               se (nomes[i, j] == '\0') 
+                  fim = verdade;
+            }
+            nocorr[i] = nocorr[i - 1];
+         }
+         fim = falso;
+         para j (0; !fim; j + 1) {
+            nomes[posic, j] = palavra[j];
+            se (palavra[j] == '\0') 
+               fim = verdade;
+         }
+         nocorr[posic] = 1;
+      }
+
+   procedimento ExibirTabela ()
+
+      var {
+         int (i)
+         logic(fim)
+      }
+
+      comandos {
+         escrever ("          ", "Palavra             ", "   Num. de ocorr.");
+         para i (1; i <= 50; i + 1) 
+            escrever ("-");
+         para i (1; i <= ntab; i + 1) {
+            escrever ("\n          ");
+            fim = falso;
+            para j (0; !fim; j + 1) {
+               se (nomes[i, j] == '\0') 
+                  fim = verdade;
+               senao 
+                  escrever (nomes[i, j]);
+            }
+            escrever (" | ", nocorr[i]);
+         }
+      }
+
+   principal 
+
+      var {
+         int (i, posic)
+         carac(c)
+         logic(fim)
+      }
+
+      comandos {
+         ntab = 0;
+         escrever ("Nova palavra? (s/n): ");
+         ler (c);
+         enquanto (c == 's' || c == 'S') {
+            escrever ("\nDigite a palavra: ");
+            fim = falso;
+            para i (0; !fim; i + 1) {
+               ler (palavra[i]);
+               se (palavra[i] == '\n') {
+                  fim = verdade;
+                  palavra[i] = '\0';
+               }
+            }
+            posic = Procura ();
+            se (posic > 0) 
+               nocorr[posic] = nocorr[posic] + 1;
+            senao 
+               chamar Inserir (~posic, i);
+            escrever ("\n\nNova palavra? (s/n): ");
+            ler (c);
+         }
+         chamar ExibirTabela ();
+      }
+
+}}}
+
+
+Programa Compilado com Sucesso!
+

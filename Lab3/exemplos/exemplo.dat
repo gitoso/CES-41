@@ -1,0 +1,66 @@
+programa exemplo {{{
+
+   var {
+      carac(c1, c2, c3, c4[21])
+      int (i1, i2, i3, i4[42])
+      carac(c5, c6)
+      logic(inicio, fim)
+   }
+
+   funcao logic F1 (int toso)
+
+      var {
+         logic(dummy)
+      }
+
+      comandos {
+         retornar dummy;
+      }
+
+   funcao int F2 ()
+
+      var {
+         int (dummy)
+      }
+
+      comandos {
+         retornar dummy;
+      }
+
+   funcao real F3 ()
+
+      var {
+         real (dummy)
+      }
+
+      comandos {
+         retornar dummy;
+      }
+
+   procedimento Output ()
+
+      var {
+         logic(toso)
+      }
+
+      comandos {
+         escrever ("it works!");
+      }
+
+   principal 
+
+      var {
+         int (i, posic)
+         carac(c)
+         logic(fim)
+      }
+
+      comandos {
+         chamar Output ();
+      }
+
+}}}
+
+
+Programa Compilado com Sucesso!
+

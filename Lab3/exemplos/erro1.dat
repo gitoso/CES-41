@@ -1,0 +1,10 @@
+programa Erro1 {{{
+
+   var {
+      carac(nomes[50, 10], palavra[10])
+      int (ntab, nocorr[50])
+      carac(c)
+      logic(fim)
+   }
+
+syntax error
