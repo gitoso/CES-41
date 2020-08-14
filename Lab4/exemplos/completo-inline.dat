@@ -1,0 +1,223 @@
+programa AnaliseDeTexto {{{
+
+   var {
+      carac (nomes[50, 10], palavra[10])
+      int (ntab, nocorr[50])
+      carac (c)
+      logic (fim)
+   }
+
+   funcao int Procura ()
+
+      var {
+         int (i, inf, sup, med, posic, compara)
+         logic (achou, fimteste)
+      }
+
+      comandos {
+         achou = falso;
+         inf = 1;
+         sup = ntab;
+         enquanto (!achou && sup >= inf) {
+            med = inf + sup / 2;
+            compara = 0;
+            fimteste = falso;
+            para i (0; !fimteste && compara == 0; i + 1) {
+               se (palavra[i] < nomes[med, i]) 
+                  compara = ~1;
+               senao 
+                  se (palavra[i] > nomes[med, i]) 
+                     compara = 1;
+               se (palavra[i] == '\0' || nomes[med, i] == '\0') 
+                  fimteste = verdade;
+            }
+            se (compara == 0) 
+               achou = verdade;
+            senao 
+               se (compara < 0) 
+                  sup = med - 1;
+               senao 
+                  inf = med + 1;
+         }
+         se (achou) 
+            posic = med;
+         senao 
+            posic = ~inf;
+         retornar posic;
+      }
+
+   procedimento Inserir (int posic)
+
+      var {
+         int (i, j)
+         logic (fim)
+      }
+
+      comandos {
+         ntab = ntab + 1;
+         para i (ntab; i >= posic + 1; i - 1) {
+            fim = falso;
+            para j (0; !fim; j + 1) {
+               nomes[i, j] = nomes[i - 1, j];
+               se (nomes[i, j] == '\0') 
+                  fim = verdade;
+            }
+            nocorr[i] = nocorr[i - 1];
+         }
+         fim = falso;
+         para j (0; !fim; j + 1) {
+            nomes[posic, j] = palavra[j];
+            se (palavra[j] == '\0') 
+               fim = verdade;
+         }
+         nocorr[posic] = 1;
+      }
+
+   procedimento ExibirTabela ()
+
+      var {
+         int (i)
+         logic (fim)
+      }
+
+      comandos {
+         escrever ("  ", "Palavra  ", "  Num.  de  ocorr.");
+         para i (1; i <= 50; i + 1) 
+            escrever ("-");
+         para i (1; i <= ntab; i + 1) {
+            escrever ("\n  ");
+            fim = falso;
+            para j
+
+***** Identificador Nao Declarado: j *****
+
+
+
+***** Incompatibilidade: Expressao nao inteiro ou caractere *****
+
+ (0; !fim; j + 1
+
+***** Incompatibilidade: Operando improprio para operador aritmetico *****
+
+) {
+               se (nomes[i, j
+
+***** Incompatibilidade: Tipo inadequado para subscrito *****
+
+] == '\0') 
+                  fim = verdade;
+               senao 
+                  escrever (nomes[i, j
+
+***** Incompatibilidade: Tipo inadequado para subscrito *****
+
+]);
+            }
+            escrever ("  |  ", nocorr[i]);
+         }
+      }
+
+   principal 
+
+      var {
+         int (i, posic)
+         carac (c)
+         logic (fim)
+      }
+
+      comandos {
+         ntab = 0;
+         escrever ("Nova  palavra?  (s/n):  ");
+         ler (c);
+         enquanto (c == 's' || c == 'S') {
+            escrever ("\nDigite  a  palavra:  ");
+            fim = falso;
+            para i (0; !fim; i + 1) {
+               ler (palavra[i]);
+               se (palavra[i] == '\n') {
+                  fim = verdade;
+                  palavra[i] = '\0';
+               }
+            }
+            posic = Procura ();
+            se (posic > 0) 
+               nocorr[posic] = nocorr[posic] + 1;
+            senao 
+               chamar Inserir (~posic, i);
+            escrever ("\n\nNova  palavra?  (s/n):  ");
+            ler (c);
+         }
+         chamar ExibirTabela ();
+      }
+
+}}}
+
+
+===== VARIAVEIS NAO DECLARADAS OU NAO REFERENCIADAS: =====
+
+Variavel c (Escopo: ##principal): Nao Inicializada
+Variavel c (Escopo: ##global): Nao Inicializada
+Variavel c (Escopo: ##global): Nao Referenciada
+Variavel i (Escopo: ##principal): Nao Inicializada
+Variavel i (Escopo: ExibirTabela): Nao Inicializada
+Variavel i (Escopo: Inserir): Nao Inicializada
+Variavel i (Escopo: Procura): Nao Inicializada
+Variavel j (Escopo: ExibirTabela): Nao Inicializada
+Variavel j (Escopo: Inserir): Nao Inicializada
+Variavel fim (Escopo: ##global): Nao Inicializada
+Variavel fim (Escopo: ##global): Nao Referenciada
+
+
+===== TABELA  DE  SIMBOLOS: =====
+
+Classe 0:
+  (ExibirTabela, IDPROC | Escopo: ##global)
+Classe 3:
+  (compara, IDVAR, INTEGER, 1, 1 | Escopo: Procura)
+Classe 5:
+  (##global, GLOBAL)
+Classe 7:
+  (c, IDVAR, CHAR, 0, 1 | Escopo: ##principal)
+  (c, IDVAR, CHAR, 0, 0 | Escopo: ##global)
+  (ntab, IDVAR, INTEGER, 1, 1 | Escopo: ##global)
+  (palavra, IDVAR, CHAR, 1, 1EH ARRAY
+ 	dims = 1, dimensoes: 10 | Escopo: ##global)
+Classe 11:
+  (med, IDVAR, INTEGER, 1, 1 | Escopo: Procura)
+Classe 13:
+  (posic, IDVAR, INTEGER, 1, 1 | Escopo: ##principal)
+  (i, IDVAR, INTEGER, 0, 1 | Escopo: ##principal)
+  (i, IDVAR, INTEGER, 0, 1 | Escopo: ExibirTabela)
+  (i, IDVAR, INTEGER, 0, 1 | Escopo: Inserir)
+  (posic, IDVAR, INTEGER, 1, 1 | Escopo: Inserir)
+  (posic, IDVAR, INTEGER, 1, 1 | Escopo: Procura)
+  (i, IDVAR, INTEGER, 0, 1 | Escopo: Procura)
+Classe 14:
+  (j, IDVAR, LOGICAL, 0, 1 | Escopo: ExibirTabela)
+  (j, IDVAR, INTEGER, 0, 1 | Escopo: Inserir)
+  (fimteste, IDVAR, LOGICAL, 1, 1 | Escopo: Procura)
+Classe 15:
+  (nocorr, IDVAR, INTEGER, 1, 1EH ARRAY
+ 	dims = 1, dimensoes: 50 | Escopo: ##global)
+Classe 17:
+  (fim, IDVAR, LOGICAL, 1, 1 | Escopo: ##principal)
+  (fim, IDVAR, LOGICAL, 1, 1 | Escopo: ExibirTabela)
+  (fim, IDVAR, LOGICAL, 1, 1 | Escopo: Inserir)
+  (fim, IDVAR, LOGICAL, 0, 0 | Escopo: ##global)
+  (nomes, IDVAR, CHAR, 1, 1EH ARRAY
+ 	dims = 2, dimensoes: 50 10 | Escopo: ##global)
+Classe 18:
+  (inf, IDVAR, INTEGER, 1, 1 | Escopo: Procura)
+Classe 19:
+  (Inserir, IDPROC | Escopo: ##global)
+  (Procura, IDFUNC | Escopo: ##global)
+Classe 20:
+  (##principal, IDPROG | Escopo: ##global)
+Classe 22:
+  (achou, IDVAR, LOGICAL, 1, 1 | Escopo: Procura)
+  (sup, IDVAR, INTEGER, 1, 1 | Escopo: Procura)
+  (AnaliseDeTexto, IDPROG | Escopo: ##global)
+
+
+PROGRAMA COM ERROS SEMÂNTICOS!
+

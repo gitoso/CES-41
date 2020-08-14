@@ -1,0 +1,133 @@
+programa TestandoASemantica {{{
+
+   var {
+      int (glob1, glob2)
+   }
+
+   funcao int Test (int argint, real argreal, carac argcarac, logic arclogic)
+
+      var {
+         int (soma, i)
+         int (soma)  /* 2 */
+         int (glob1) /* 2 */
+         real (pi)
+         carac (c)
+         logic (implicacao)
+      }
+
+      comandos {
+         soma = glob2;
+         soma = variavelalieligena; /* 1 */
+
+         glob1 = soma;
+         glob1 = argcarac;
+         glob1 = soma + argcarac;
+         glob1 = argreal; /* 8, 12 */
+         glob1 = arclogic; /* 8, 12 */
+
+         pi = soma;
+         pi = argreal;
+         pi = argcarac;
+         pi = soma + argreal - argcarac;
+         pi = arclogic; /* 8, 12 */
+         pi = soma + argreal - argcarac + arclogic; /* 8, 12 */
+
+         c = soma;
+         c = argcarac;
+         c = soma * argcarac;
+         c = argreal; /* 8, 12 */
+         c = soma + argcarac + argreal; /* 8, 12 */
+         c = arclogic; /* 8, 12 */
+
+         implicacao = arclogic && !arclogic || arclogic;
+         implicacao = soma; /* 8, 12 */
+         implicacao = argreal; /* 8, 12 */
+         implicacao = argcarac; /* 8, 12 */
+         implicacao = soma + argreal + argcarac; /* 8, 12 */
+
+         se (c)  /* 14 */
+            soma = 0;
+
+         se (c == argcarac)
+            soma = soma + 1;
+         senao
+            soma = soma - 1;
+
+         enquanto (c != 's') {
+            c = c + 1;
+         }
+
+         enquanto (c) { /* 14 */
+            c = c + 1;
+         }
+
+         repetir { /* 14 */
+            argint = argint - 1;    
+         }
+         enquanto (argint);
+
+         para i (1; i <= 50; i+1) 
+            i = i*2;
+
+         para argreal (argreal; c; implicacao) /* 15, 16, 17 */
+            i = i*2;
+
+         retornar ; /* 24 */
+      }
+
+   procedimento Exibir()
+
+   var {
+      int (a)
+      real (re)
+      logic (flag)
+   }
+
+   comandos {
+
+      chamar Exibir(); /* 27 */
+
+      retornar a; /* 24 */
+   }
+
+   funcao int glob1 () /* 4 */
+
+      var {
+         int ( meuint, arrayerrado[0,50], meuarray[10,50] , meuarray2[10] ) /* 6 */ 
+         real ( meuarrayreal[10] )
+         logic (loc)
+      }
+
+      comandos {
+         meuarray[6,5] = meuint[2]; /* 9 */
+         meuarray[6,7] = meuarray2[2, 3]; /* 10 */
+
+         chamar Exibir();
+         chamar Test(1, 1.0, 'a', falso);
+         meuint = Test(1, 1.0, 'a', falso);
+         meuint =  Test(1, 1.0, 'a', falso, 4); /* 22 */
+
+         meuint =  Test(loc, 1.0, 'a', falso);  /* 23 */
+         meuint =  Test(2.34, 1.0, 'a', falso); /* 23 */
+         meuint =  Test(1, loc, 'a', falso);    /* 23 */
+         meuint =  Test(1, 1.0, loc, falso);    /* 23 */
+         meuint =  Test(2, 1.0, 'a', 3);        /* 23 */
+
+         retornar loc; /* 25 */
+      }
+
+   principal 
+
+      var {
+         int (a)
+      }
+
+      comandos {
+         a = a +1;
+
+         retornar;
+      }
+
+}}}
+
+/* 7 */
