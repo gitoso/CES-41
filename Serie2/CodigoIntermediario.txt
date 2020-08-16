@@ -1,0 +1,126 @@
+# ----- GLOBAL (MatrizTransposta) -----
+1) OPENMOD, (FUNCAO, ##global), (IDLE), (IDLE)
+2) CALLOP, (FUNCAO, principal), (INT, 0), (IDLE)
+3) EXITOP, (IDLE), (IDLE), (IDLE)
+
+# ----- LerMatriz -----
+1) OPENMOD, (FUNCAO, LerMatriz), (IDLE), (IDLE)
+2) PARAM, (CADEIA, Dimensao da matriz quadrada: ), (IDLE), (IDLE)
+3) WRITEOP, (INT, 1), (IDLE), (IDLE)
+----
+4) PARAM, (VAR, n), (IDLE), (IDLE)
+5) READOP, (INT, 1), (IDLE), (IDLE)
+6) LTOP, (VAR, n), (INT, 0), (VAR, ##1)
+7) JTOP, (VAR, ##1), (IDLE), (ROTULO, 4)
+8) PARAM, (CADEIA, \nElementos da matriz: \n), (IDLE), (IDLE)
+9) WRITEOP, (INT, 1), (IDLE), (IDLE)
+10) ATRIBOP, (INT, 0), (IDLE), (VAR, i)
+11) MENOSOP, (VAR, n), (INT, 1), (VAR, ##2)
+----
+12) LEOP, (VAR, i), (VAR, ##2), (VAR, ##3)
+13) JFOP, (VAR, ##3), (IDLE), (ROTULO, 28)
+14) ATRIBOP, (INT, 0), (IDLE), (VAR, j)
+15) MENOSOP, (VAR, n), (INT, 1), (VAR, ##4)
+16) LEOP, (VAR, j), (VAR, ##4), (VAR, ##5)
+17) JFOP, (VAR, ##5), (IDLE), (ROTULO 26)
+----
+18) INDOP, (VAR, i), (IDLE), (IDLE)
+19) INDOP, (VAR, j), (IDLE), (IDLE)
+20) INDEXOP, (VAR, A), (INT, 2), (VAR, ##6)
+21) PARAM, (VAR, ##7), (IDLE), (IDLE)
+22) READOP, (INT, 1), (IDLE), (IDLE)
+23) ATRIBPONTOP, (VAR, ##7), (IDLE), (VAR, ##6)
+----
+24) MAISOP, (VAR, j), (INT, 1), (VAR, j)
+25) JUMPOP, (IDLE), (IDLE), (ROTULO, 16)
+----
+26) MAISOP, (VAR, i), (INT, 1), (VAR, i)
+27) JUMPOP, (IDLE), (IDLE), (ROTULO, 12)
+----
+28) RETURNOP, (IDLE), (IDLE), (IDLE)​
+
+# ----- EscreverMatriz -----
+1) OPENMOD, (FUNCAO, EscreverMatriz), (IDLE), (IDLE)
+2) LEOP, (VAR, n), (INT, 0), (VAR, ##8)
+3) JFOP, (VAR, ##8), (IDLE), (ROTULO, 7)
+4) PARAM, (CADEIA, Matriz nula), (IDLE), (IDLE)
+5) WRITEOP, (INT, 1), (IDLE), (IDLE)
+6) JUMPOP, (IDLE), (IDLE), (ROTULO 29)
+---
+7) ATRIBOP, (INT, 0), (IDLE), (VAR, i)
+8) MENOSOP, (VAR, n), (INT, 1), (VAR, ##9)
+---
+9) LEOP, (VAR, i), (VAR, ##9), (VAR, ##10)
+10) JFOP, (VAR, ##10), (IDLE), (ROTULO, 29)
+11) ATRIBOP, (INT, 0), (IDLE), (VAR, j)
+12) MENOSOP, (VAR, n), (INT, 1), (VAR, ##11)
+---
+13) LEOP, (VAR, j), (VAR, ##11), (VAR, ##12)
+14) JTOP, (VAR, ##12), (IDLE), (ROTULO, 25)
+15) INDOP, (VAR, i), (IDLE), (IDLE)
+16) INDOP, (VAR, j), (IDLE), (IDLE)
+17) INDEXOP, (VAR, A), (INT, 2), (VAR, ##13)
+18) CONTAPONTOP, (VAR, ##13), (IDLE), (VAR, ##14)
+19) PARAM, (VAR, ##14), (IDLE), (IDLE)
+20) WRITEOP, (INT, 1), (IDLE), (IDLE)
+--------------------------------------------
+21) PARAM, (VAR, A[i, j]), (IDLE), (IDLE)
+22) WRITEOP, (INT, 1), (IDLE), (IDLE)
+---
+23) MAISOP, (VAR, j), (INT, 1), (VAR, j)
+24) JUMPOP, (IDLE), (IDLE), (ROTULO, 13)
+---
+25) PARAM, (CADEIA, \n), (IDLE), (IDLE)
+26) WRITEOP, (INT, 1), (IDLE), (IDLE)
+---
+27) MAISOP, (VAR, i), (INT, 1), (VAR, i)
+28) JUMPOP, (IDLE), (IDLE), (ROTULO, 9)
+---
+29) RETURNOP, (IDLE), (IDLE), (IDLE)​
+
+# ----- Trocar ------
+1) OPENMOD, (FUNCAO, Trocar), (IDLE), (IDLE)
+2) INDOP, (VAR, i), (IDLE), (IDLE)
+3) INDOP, (VAR, j), (IDLE), (IDLE)
+4) INDEXOP, (VAR, A), (INT, 2), (VAR ##15)
+5) CONTAPONTOP, (VAR, ##15), (IDLE), (VAR, ##16)
+6) ATRIBOP, (VAR, ##16), (IDLE), (VAR, aux)
+7) INDOP, (VAR, j), (IDLE), (IDLE)
+8) INDOP, (VAR, i), (IDLE), (IDLE)
+9) INDEXOP, (VAR, A), (INT, 2), (VAR ##17)
+10) ATRIBPONTOP, (VAR, ##17), (IDLE), (VAR, #15)
+11) ATRIBPONTOP, (VAR, aux), (IDLE), (VAR, ##17)
+
+
+# ----- principal -----
+1) OPENMOD, (FUNCAO, principal), (IDLE), (IDLE) 
+2) CALLOP, (FUNCAO, LerMatriz), (IDLE), (IDLE)
+3) PARAM, (CADEIA, \nMatriz original:\n\n), (IDLE), (IDLE)
+4) WRITEOP, (INT, 1), (IDLE), (IDLE)
+5) CALLOP, (FUNCAO, EscreverMatriz), (IDLE), (IDLE)
+6) LTOP, (VAR, n), (INT, 0), (VAR, ##18)
+7) JFOP, (VAR, ##18), (IDLE), (ROTULO, 23)
+8) ATRIBOP, (INT, 0), (IDLE), (VAR, i)
+9) MENOSOP, (VAR, n), (INT, 2), (VAR ##19)
+----
+10) LEOP, (VAR, i), (VAR, ##19), (VAR, #32)
+11) JFOP, (VAR, ##20), (IDLE), (ROTULO, 23)
+12) MAISOP, (VAR, i), (INT, 1), (VAR, j)
+13) MENOSOPS, (VAR, n), (INT, 1), (VAR, ##21)
+----
+14) LEOP, (VAR, j), (VAR, ##21), (VAR, ##22)
+15) JFOP, (VAR, ##22), (IDLE), (ROTULO, 21)
+16) PARAM, (VAR, i), (IDLE), (IDLE)
+17) PARAM, (VAR, j), (IDLE), (IDLE)
+18) CALLOP, (FUNCAO, Trocar), (INT, 2), (IDLE)
+---- 
+19) MAISOP, (VAR, j), (INT, 1), (VAR, j)
+20) JUMPOP, (IDLE), (IDLE), (ROTULO, 14)
+---- 
+21) MAISOP, (VAR, i), (INT, 1), (VAR, i)
+22) JUMPOP, (IDLE), (IDLE), (ROTULO, 10)
+---- 
+23) PARAM, (CADEIA, \nMatriz transposta:\n\n), (IDLE), (IDLE)
+24) WRITEOP, (INT, 1), (IDLE), (IDLE)
+25) CALLOP, (FUNCAO, EscreverMatriz), (IDLE), (IDLE)
+26) RETURNOP, (IDLE), (IDLE), (IDLE)

@@ -1,0 +1,33 @@
+global: int comb;​
+functions:​
+int fat (int n;) {​
+    local: int i, fat;​
+    statements:​
+    if (n < 0 || n > 7) fat = ~1;​
+    else {​
+        fat = 1; i = 2;​
+        while (i <= n) ​
+            { fat = fat * i; i = i + 1; }​
+    }
+    return fat;​
+}​
+
+void main () {​
+    local:​
+    char c; int m, n;​
+    statements:​
+    do {​
+        write ("Combinacao de m elementos tomados n a n? (s/n): ");​
+        do read (c); while (c!='s' && c!='n');​
+        if (c == 's') {​
+            write ("m: "); read (m);​
+            write ("n: "); read (n);​
+            if (m <= 0 || m > 7 || n <= 0 || m < n)​
+                write ("Dados incompativeis");​
+            else {​
+                comb = fat(m) / (fat(m-n) * fat(n));​
+                write ("Num. de combinacoes: ", comb);​
+            } ​
+        }​
+    } while (c == 's');​
+}​

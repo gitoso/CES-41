@@ -1,0 +1,80 @@
+# ----- GLOBAL -----
+1) OPENMOD, (FUNCAO, ##global), (IDLE), (IDLE)​
+2) CALLOP, (FUNCAO, main), (INT, 0), (IDLE)​
+3) EXITOP, (IDLE) , (IDLE) , (IDLE)​
+
+# ----- FAT -----
+1) OPENMOD, (FUNCAO, fat), (IDLE), (IDLE)​
+2) LTOP, (VAR, n), (INT, 0), (VAR, ##1)​
+3) GTOP, (VAR, n), (INT, 7), (VAR, ##2)​
+4) OROP, (VAR, ##1), (VAR, ##2), (VAR, ##3)​
+5) JFOP, (VAR, ##3), (IDLE), (ROTULO, 9)​
+6) MENUNOP, (INT, 1), (IDLE), (VAR, ##4)​
+7) ATRIBOP, (VAR, ##4), (IDLE), (VAR, fat)​
+8) JUMPOP, (IDLE), (IDLE), (ROTULO, 21)​
+9) NOP, (IDLE), (IDLE), (IDLE)​
+10) ATRIBOP, (INT, 1), (IDLE), (VAR, fat)​
+11) ATRIBOP, (INT, 2), (IDLE), (VAR, i)​
+12) NOP, (IDLE), (IDLE), (IDLE)​
+13) LEOP, (VAR, i), (VAR, n), (VAR, ##5)​
+14) JFOP, (VAR, ##5), (IDLE), (ROTULO, 20)​
+15) MULTOP, (VAR, fat), (VAR, i), (VAR, ##6)​
+16) ATRIBOP, (VAR, ##6), (IDLE), (VAR, fat)​
+17) MAISOP, (VAR, i), (INT, 1), (VAR, ##7)​
+18) ATRIBOP, (VAR, ##7), (IDLE), (VAR, i)​
+19) JUMPOP, (IDLE), (IDLE), (ROTULO, 12)​
+20) NOP, (IDLE), (IDLE), (IDLE)​
+21) NOP, (IDLE), (IDLE), (IDLE)
+22) RETURNOP, (VAR, fat), (IDLE), (IDLE)​
+
+# ----- MAIN -----
+1) OPENMOD, (FUNCAO, main), (IDLE), (IDLE)​
+2) NOP, (IDLE), (IDLE), (IDLE)​
+3) PARAM, ​(CADEIA, Combinacao de m elementos  tomados n a n? (s/n): ), ​(IDLE), (IDLE)​
+4) WRITEOP, (INT, 1), (IDLE), (IDLE)​
+5) NOP, (IDLE), (IDLE), (IDLE)​
+6) PARAM, (VAR, c), (IDLE), (IDLE)​
+7) READOP, (INT, 1), (IDLE), (IDLE)​
+8) NEOP, (VAR, c), (CHAR, s), (VAR, ##8)​
+9) NEOP, (VAR, c), (CHAR, n), (VAR, ##9)​
+10) ANDOP, (VAR, ##8), (VAR, ##9), (VAR, ##10)​
+11) JTOP, (VAR, ##10), (IDLE), (ROTULO, 5)​
+12) EQOP, (VAR, c), (CHAR, s), (VAR, ##11)​
+13) JFOP, (VAR, ##11), (IDLE), (ROTULO, 48)​
+14) PARAM, (CADEIA, m: ), (IDLE), (IDLE)​
+15) WRITEOP, (INT, 1), (IDLE), (IDLE)​
+16) PARAM, (VAR, m), (IDLE), (IDLE)​
+17) READOP, (INT, 1), (IDLE), (IDLE)​
+18) PARAM, (CADEIA, n: ), (IDLE), (IDLE)​
+19) WRITEOP, (INT, 1), (IDLE), (IDLE)​
+20) PARAM, (VAR, n), (IDLE), (IDLE)​
+21) READOP, (INT, 1), (IDLE), (IDLE)​22) LEOP, (VAR, m), (INT, 0), (VAR, ##12)​
+23) GTOP, (VAR, m), (INT, 7), (VAR, ##13)​
+24) OROP, (VAR, ##12), (VAR, ##13), (VAR, ##14)​
+25) LEOP, (VAR, n), (INT, 0), (VAR, ##15)​
+26) OROP, (VAR, ##14), (VAR, ##15), (VAR, ##16)​
+27) LTOP, (VAR, m), (VAR, n), (VAR, ##17)​
+28) OROP, (VAR, ##16), (VAR, ##17), (VAR, ##18)​
+29) JFOP, (VAR, ##18), (IDLE), (ROTULO, 33)​
+30) PARAM, (CADEIA, Dados incompativeis), (IDLE),  (IDLE)​
+31) WRITEOP, (INT, 1), (IDLE), (IDLE)​
+32) JUMPOP, (IDLE), (IDLE), (ROTULO, 47)​
+33) NOP, (IDLE), (IDLE), (IDLE)​
+34) PARAM, (VAR, m), (IDLE), (IDLE)​
+35) CALLOP, (FUNCAO, fat), (INT, 1), (VAR, ##19)​
+36) MENOSOP, (VAR, m), (VAR, n), (VAR, ##20)​
+37) PARAM, (VAR, ##20), (IDLE), (IDLE)​
+38) CALLOP, (FUNCAO, fat), (INT, 1), (VAR, ##21)​
+39) PARAM, (VAR, n), (IDLE), (IDLE)​
+40) CALLOP, (FUNCAO, fat), (INT, 1), (VAR, ##22)​
+41) MULTOP, (VAR, ##21), (VAR, ##22), (VAR, ##23)​
+42) DIVOP, (VAR, ##19), (VAR, ##23), (VAR, ##24)​
+43) ATRIBOP, (VAR, ##24), (IDLE), (VAR, comb)​
+44) PARAM, (CADEIA, Num. de combinacoes: ), (IDLE), (IDLE)​
+45) PARAM, (VAR, comb), (IDLE), (IDLE)​
+46) WRITEOP, (INT, 2), (IDLE), (IDLE)
+47) NOP, (IDLE), (IDLE), (IDLE)
+48) NOP, (IDLE), (IDLE), (IDLE)
+49) EQOP, (VAR, c), (CHAR, s), (VAR, ##25)​
+50) JTOP, (VAR, ##25), (IDLE), (ROTULO, 2)​
+51) RETURNOP, (IDLE), (IDLE), (IDLE)​

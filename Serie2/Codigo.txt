@@ -1,0 +1,67 @@
+programa MatrizTransposta {{{
+
+var {
+    int (A[10,10], n)
+}
+
+procedimento LerMatriz ()
+var {
+    int (i, j)
+}
+comandos {
+	escrever ("Dimensao da matriz quadrada: ");
+	repetir ler (n); enquanto (n < 0);
+	escrever ("\nElementos da matriz: \n");
+	para i (0; i <= n-1; i+1)
+		para j (0; j <= n-1; j+1)
+            	ler (A[i,j]);
+}
+
+procedimento EscreverMatriz ()
+var {
+    int (i, j)
+}
+comandos {
+    se (n <= 0) escrever ("Matriz nula");
+    senao
+        para i(0; i <= n-1; i+1) {
+            para j(0; j <= n-1; j+1)
+                escrever (A[i,j]);
+            escrever ("\n");
+        }
+}
+
+procedimento Trocar (int i, int j)
+var {int (aux)}
+
+comandos {
+    aux = A[i,j];
+    A[i,j] = A[j,i];
+    A[j,i] = aux;
+}
+
+principal
+var {
+    int (i, j)
+}
+comandos {
+
+/*	Leitura e escrita da matriz original	*/
+
+    chamar LerMatriz();
+	escrever ("\nMatriz original:\n\n");
+    chamar EscreverMatriz();
+
+/*	Transformacao da matriz em sua transposta  */
+
+	se (n > 0)
+        para i(0; i <= n-2; i+1)
+            para j(i+1; j <= n-1; j+1)
+                chamar Trocar (i, j);
+
+/*	Escrita da matriz transposta	*/
+
+	escrever ("\nMatriz transposta:\n\n");
+	chamar EscreverMatriz();
+}
+}}}
